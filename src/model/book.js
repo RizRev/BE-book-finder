@@ -19,7 +19,7 @@ const addBook = (data) => {
   const getBook = () => {
     return new Promise((resolve, reject) => {
       pool.query(
-        `SELECT * FROM "public"."favorite"`,
+        `SELECT * FROM "favorite"`,
         (err, result) => {
           if (!err) {
             resolve(result);
@@ -46,4 +46,19 @@ const addBook = (data) => {
     });
   };
 
-  module.exports = {addBook,deleteBook,getBook};
+  const getBookDetail = (id) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM "favorite" where id = '${id}'`,
+        (err, result) => {
+          if (!err) {
+            resolve(result);
+          } else {
+            reject(err);
+          }
+        }
+      );
+    });
+  }
+
+  module.exports = {addBook,deleteBook,getBook,getBookDetail};

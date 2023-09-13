@@ -18,11 +18,17 @@ const bookController = {
             author: req.body.author,
           };
         try {
-        console.log(data);
-        const result = await modelBook.addBook(data);
-        if (result) {
-            response(res,200,true,data,"Post Books Favorite Success")
-        } 
+        const cek = await modelBook.getBookDetail(data.id)
+        if (cek.rows.length !== 0) {
+            console.log(cek.rows)
+            response(res,404,false,cek.rows,"Terdapat Buku Tersebut di Favorite")
+        } else {
+            console.log(data);
+            const result = await modelBook.addBook(data);
+            if (result) {
+                response(res,200,true,data,"Post Books Favorite Success")
+            }    
+        }
         } catch (error) {
             response(res, 404, false,error,"Get Data Books Fail")
         }
