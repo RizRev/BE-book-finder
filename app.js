@@ -1,12 +1,8 @@
 const express = require('express');
-// const { Pool } = require('pg');
 var bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const port = 4000;
 const cors = require('cors');
-const mainRouter = require('./src/router/router')
-const {response} = require('./src/middleware/response')
-const modelBook = require("./src/model/book")
 const {bookController} = require("./src/controller/book")
 // Add this middleware to parse JSON request bodies
 app.use(bodyParser.json());
