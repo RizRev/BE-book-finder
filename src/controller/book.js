@@ -18,7 +18,7 @@ const bookController = {
             author: req.body.author,
           };
         try {
-        const cek = await modelBook.getBookDetail(data.id)
+        const cek = await modelBook.addBook(data)
         if (cek.rows.length !== 0) {
             console.log(cek.rows)
             response(res,404,false,cek.rows,"Terdapat Buku Tersebut di Favorite")
@@ -30,7 +30,7 @@ const bookController = {
             }    
         }
         } catch (error) {
-            response(res, 404, false,error,"Get Data Books Fail")
+            response(res, 404, false,error,"Post Data Books Fail")
         }
     },
     deleteFavorite: async (req,res,next) => {
@@ -38,7 +38,7 @@ const bookController = {
     try {
         const result = await modelBook.deleteBook(bookId);
         if (result) {
-            response(res,200,true,result,"Delete Books Favorite Success")
+            response(res,200,true,result.data.rowCount,"Delete Books Favorite Success")
         } 
         } catch (error) {
             response(res, 404, false,error,"Delete Data Books Fail")
