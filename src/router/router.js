@@ -3,6 +3,6 @@ const router = express.Router();
 const bookRouter = require("./book")
 
 router
-    .use("/book",bookRouter)
+.use("/book",bookRouter)
 
 module.exports = router;
