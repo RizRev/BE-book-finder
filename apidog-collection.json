@@ -1,0 +1,229 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BE Book Finder",
+    "version": "1.0.0",
+    "description": "API untuk mengelola daftar buku favorit"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Local Development"
+    }
+  ],
+  "paths": {
+    "/book": {
+      "get": {
+        "summary": "Get All Favorite Books",
+        "operationId": "getBook",
+        "tags": ["Book"],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil semua buku favorit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": 200,
+                  "data": [
+                    {
+                      "id": "abc123",
+                      "title": "Clean Code",
+                      "author": "Robert C. Martin",
+                      "image": "https://example.com/clean-code.jpg"
+                    }
+                  ],
+                  "message": "Get Books Favorite Success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal mengambil data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "statusCode": 404,
+                  "data": {},
+                  "message": "Get Data Books Fail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add Book to Favorites",
+        "operationId": "postFavorite",
+        "tags": ["Book"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              },
+              "example": {
+                "id": "abc123",
+                "title": "Clean Code",
+                "author": "Robert C. Martin",
+                "image": "https://example.com/clean-code.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Buku berhasil ditambahkan ke favorit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": 200,
+                  "data": {
+                    "id": "abc123",
+                    "title": "Clean Code",
+                    "author": "Robert C. Martin",
+                    "image": "https://example.com/clean-code.jpg"
+                  },
+                  "message": "Post Books Favorite Success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal menambahkan buku",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "statusCode": 404,
+                  "data": {},
+                  "message": "Post Data Books Fail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/{id}": {
+      "delete": {
+        "summary": "Delete Book from Favorites",
+        "operationId": "deleteFavorite",
+        "tags": ["Book"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Buku berhasil dihapus dari favorit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "success": true,
+                  "statusCode": 200,
+                  "data": 1,
+                  "message": "Delete Books Favorite Success"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal menghapus buku",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "statusCode": 404,
+                  "data": {},
+                  "message": "Delete Data Books Fail"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BookInput": {
+        "type": "object",
+        "required": ["id", "title"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID unik buku"
+          },
+          "title": {
+            "type": "string",
+            "description": "Judul buku"
+          },
+          "author": {
+            "type": "string",
+            "description": "Nama penulis"
+          },
+          "image": {
+            "type": "string",
+            "description": "URL gambar cover buku"
+          }
+        }
+      },
+      "BookItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "image": { "type": "string" }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": true },
+          "statusCode": { "type": "integer", "example": 200 },
+          "data": {},
+          "message": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "statusCode": { "type": "integer", "example": 404 },
+          "data": {},
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

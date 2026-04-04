@@ -61,4 +61,19 @@ const addBook = (data) => {
     });
   }
 
-  module.exports = {addBook,deleteBook,getBook,getBookDetail};
+  const cekBook = (id) => {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM "favorite" WHERE id = '${id}'`,
+        (err, result) => {
+          if (!err) {
+            resolve(result);
+          } else {
+            reject(err);
+          }
+        }
+      );
+    });
+  }
+
+  module.exports = {addBook,deleteBook,getBook,getBookDetail,cekBook};

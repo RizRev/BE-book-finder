@@ -38,7 +38,7 @@ const bookController = {
     try {
         const result = await modelBook.deleteBook(bookId);
         if (result) {
-            response(res,200,true,result.data.rowCount,"Delete Books Favorite Success")
+            response(res,200,true,null,"Delete Books Favorite Success")
         } 
         } catch (error) {
             response(res, 404, false,error,"Delete Data Books Fail")
